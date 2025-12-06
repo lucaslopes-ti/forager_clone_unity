@@ -6,6 +6,14 @@ public class GameManager : MonoBehaviour
     public GameObject actionCursor;
     [SerializeField]
     private GameObject interacionObject;
+
+    public float TimeToDelete = 3f;
+    
+    [Header("Player Energy")]
+    public float PlayerEnergyMax = 100f;
+    public float PlayerEnergy = 100f;
+
+    
     public void ActiveCursor(GameObject obj)
     {
         if (actionCursor == null)
@@ -54,6 +62,12 @@ public class GameManager : MonoBehaviour
         
     }
 
+    void Start()
+    {
+        // Inicializa a energia do jogador
+        PlayerEnergy = PlayerEnergyMax;
+    }
+
     void FixedUpdate()
     {
         if (interacionObject != null)
@@ -68,6 +82,16 @@ public class GameManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void AddEnergy(float amount)
+    {
+        PlayerEnergy += amount;
+        if (PlayerEnergy > PlayerEnergyMax)
+        {
+            PlayerEnergy = PlayerEnergyMax;
+        }
+        Debug.Log($"Energia restaurada! Energia atual: {PlayerEnergy}/{PlayerEnergyMax}");
     }
 
     public void Loot(Item item, Vector3 position)

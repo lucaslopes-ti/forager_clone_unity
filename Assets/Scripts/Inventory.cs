@@ -10,6 +10,14 @@ public class Inventory : MonoBehaviour
     public RectTransform SlotGrid;
     public GameObject slotPrefab;
 
+    
+    [Header("Item Info")]
+    public GameObject ItemInfoWindow;
+    public Image ItemImage;
+    public Text ItemName;
+    public Text ItemType;
+    public Text ItemUseText;
+
     private List<GameObject> inventorySlots = new List<GameObject>();
     //public Dictionary<Item, GameObject> inventorySlots = new Dictionary<Item, GameObject>();
 
@@ -26,14 +34,32 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void ShowInventory()
+    public void UseItem(Item item)
     {
-        if (inventoryPanel == null)
+        if (item.itemUse == ItemUse.Consumable)
         {
-            Debug.LogError("inventoryPanel não está atribuído! Atribua o painel de inventário no Inspector do componente Inventory.");
-            return;
+            // Restaura energia do jogador se o item tiver energia para restaurar
+            if (item.energyRestore > 0 && CoreGame._instance != null && CoreGame._instance.gameManager != null)
+            {
+                CoreGame._instance.gameManager.AddEnergy(item.energyRestore);
+            }
         }
         
+        int amount = inventory[item];
+        amount -= 1;
+        if (amount <= 0)
+        {
+            DeleteItem(item);
+        }
+        else if (amount > 0)
+        {
+            inventory[item] = amount;
+            UpdateInventory();
+        }
+    }
+
+    public void ShowInventory()
+    {
         bool isActive = !inventoryPanel.activeSelf;
         inventoryPanel.SetActive(isActive);
 
@@ -41,6 +67,18 @@ public class Inventory : MonoBehaviour
         {
             UpdateInventory();
         }
+    }
+
+    public void DeleteItem(Item item)
+    {
+        inventory.Remove(item);
+        UpdateInventory();
+        DisableItemInfo();
+    }
+
+     public void DisableItemInfo()
+    {
+        ItemInfoWindow.SetActive(false);
     }
 
     void UpdateInventory()
@@ -59,5 +97,46 @@ public class Inventory : MonoBehaviour
             newSlot.GetComponent<InventorySlot>().UpdateSlot(item.Key, item.Value);
         }
     }
+
+    public void ShowItemInfo(Item item)
+    {
+        if (item == null)
+        {
+            Debug.LogError("Item é null no ShowItemInfo!");
+            return;
+        }
+
+        if (ItemImage != null)
+        {
+            ItemImage.sprite = item.itemSprite;
+        }
+
+        if (ItemName != null)
+        {
+            ItemName.text = item.itemName;
+        }
+
+        if (ItemUseText != null)
+        {
+            ItemUseText.text = item.itemUseText ?? "";
+        }
+
+        if (ItemType != null)
+        {
+            ItemType.text = item.itemUse.ToString();
+        }
+
+        if (ItemInfoWindow != null)
+        {
+            ItemInfoWindow.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("ItemInfoWindow não está atribuído no Inspector do Inventory!");
+        }
+    }
+    
+
+   
 }
 

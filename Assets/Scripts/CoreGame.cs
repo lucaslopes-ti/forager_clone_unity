@@ -6,6 +6,11 @@ public enum ItemType
 
 }
 
+public enum ItemUse
+{
+    Material, Consumable
+}
+
 public class CoreGame : MonoBehaviour
 {
     public static CoreGame _instance;

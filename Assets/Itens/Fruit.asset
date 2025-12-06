@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4675d4c1de7468e43863e2afddec09c5, type: 3}
+  m_Name: Fruit
+  m_EditorClassIdentifier: Assembly-CSharp::item
+  itemType: 3
+  itemUse: 1
+  itemAmount: 3
+  itemName: Fruta
+  itemSprite: {fileID: -6497341097991101460, guid: 743fec99883bc9349ba0c100fe49b7d0, type: 3}
+  itemDescription: Uma pequena fruta de sabor citrico
+  itemUseText: Recupera 5 de energia
+  lootPreFab: {fileID: 8746380465865221137, guid: ceb3c5f41eeb62045935660b81212b53, type: 3}
+  lootAmount: 2
