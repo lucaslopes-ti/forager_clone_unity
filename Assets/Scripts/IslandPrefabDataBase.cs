@@ -7,6 +7,11 @@ public class IslandPrefabDataBase : MonoBehaviour
 
     public ResourceLoot[] resourceLV1;
     public ResourceLoot[] resourceLV2;
+    public ResourceLoot[] resourceLV3;
+    public ResourceLoot[] resourceLV4;
+    public ResourceLoot[] resourceLV5;
+
+    public int[] LevelToUpgrade;
     public List<GameObject> resourceIsland = new List<GameObject>();
 
 
@@ -14,23 +19,38 @@ public class IslandPrefabDataBase : MonoBehaviour
     {
         resourceIsland.Clear();
 
-        if (resourceLV1.Length > 0)
+        for (int i = 0; i < LevelToUpgrade.Length; i++)
         {
-            foreach (ResourceLoot l in resourceLV1)
+            if(CoreGame._instance.gameManager.playerLevel >= LevelToUpgrade[i])
             {
-                for (int i = 0; i < l.amount; i++)
+                switch(i)
                 {
-                    resourceIsland.Add(l.resource);
+                    case 0:
+                        ResourceLevel(resourceLV1);
+                        break;
+                    case 1:
+                        ResourceLevel(resourceLV2);
+                        break;
+                    case 2:
+                        ResourceLevel(resourceLV3);
+                        break;
+                    case 3:
+                        ResourceLevel(resourceLV4);
+                        break;
+                    case 4:
+                        ResourceLevel(resourceLV5);
+                        break;
                 }
             }
         }
+    }
 
-        if (CoreGame._instance.gameManager.playerLevel >= 2)
+    private void ResourceLevel(ResourceLoot[] res){
+        if (res != null && res.Length > 0)
         {
-            if (resourceLV2.Length > 0)
+            foreach (ResourceLoot l in res)
             {
-                
-                foreach (ResourceLoot l in resourceLV2)
+                if (l.resource != null)
                 {
                     for (int i = 0; i < l.amount; i++)
                     {

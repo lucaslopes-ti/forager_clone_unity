@@ -1,103 +1,68 @@
-# Forager Clone - Unity Project
+# Forager Clone
 
-Projeto clone do jogo Forager desenvolvido em Unity.
+Clone do Forager que estou desenvolvendo em Unity. Projeto ainda em desenvolvimento.
 
-## 📋 Requisitos
+## Como rodar
 
-- Unity 2022.3 LTS ou superior
-- Visual Studio ou Rider (recomendado para desenvolvimento C#)
+Primeiro, clone o repo. Depois abre no Unity (2022.3 ou mais recente). O Unity vai importar tudo sozinho, pode demorar um pouco na primeira vez.
 
-## 🚀 Como Começar
+Depois é só abrir a cena `SampleScene.unity` e dar play.
 
-1. **Clone o repositório:**
-   ```bash
-   git clone [URL_DO_REPOSITORIO]
-   cd forager_clone
-   ```
+## O que tem no jogo
 
-2. **Abra o projeto no Unity:**
-   - Abra o Unity Hub
-   - Clique em "Add" e selecione a pasta do projeto
-   - O Unity irá detectar a versão necessária automaticamente
+- Sistema de mineração: clica e segura pra minerar recursos
+- Inventário: aperta ESC pra abrir/fechar
+- Coleta de itens: passa por cima dos loots no chão
+- Consumíveis: clica nos itens no inventário pra restaurar energia
+- Sistema de ilhas com spawn automático de recursos
 
-3. **Aguarde a importação:**
-   - O Unity irá importar todos os assets e dependências automaticamente
-   - Isso pode levar alguns minutos na primeira vez
-
-4. **Abra a cena:**
-   - Vá para `Assets/Scenes/SampleScene.unity`
-   - Pressione Play para testar o jogo
-
-## 📁 Estrutura do Projeto
+## Estrutura das pastas
 
 ```
 Assets/
-├── Scripts/          # Todos os scripts C# do jogo
-├── Scenes/           # Cenas do jogo
-├── Prefab/           # Prefabs reutilizáveis
-├── Sprites/          # Sprites e imagens
-├── Animations/       # Animações e controllers
-├── Itens/            # ScriptableObjects dos itens
-└── Settings/         # Configurações do projeto
+├── Scripts/       # Código C#
+├── Scenes/        # Cenas
+├── Prefab/        # Prefabs
+├── Sprites/       # Imagens
+├── Animations/    # Animações
+├── Itens/         # ScriptableObjects dos itens
+└── Settings/      # Configs do projeto
 ```
 
-## 🎮 Sistema de Jogo
+## Configuração necessária
 
-- **Mineração**: Clique e segure para minerar recursos
-- **Inventário**: Pressione ESC para abrir/fechar
-- **Coleta**: Passe por cima dos itens no chão para coletá-los
-- **Consumíveis**: Clique nos itens consumíveis no inventário para restaurar energia
+Antes de começar a mexer, tem alguns campos que precisam estar configurados no Inspector:
 
-## 🔧 Configuração Importante
+**CoreGame** (objeto principal):
+- playerController
+- gameManager  
+- inventory
 
-Antes de começar a trabalhar, certifique-se de que os seguintes campos estão atribuídos no Inspector:
+**GameManager**:
+- actionCursor (o cursor que aparece quando pode interagir)
+- interactionDistance
+- distanceToSpawnResource
+- timeToSpawnResource
 
-### CoreGame (objeto principal da cena):
-- `playerController` - Referência ao PlayerController
-- `gameManager` - Referência ao GameManager
-- `inventory` - Referência ao Inventory
+**Inventory**:
+- inventoryPanel
+- SlotGrid
+- slotPrefab
+- ItemInfoWindow e os componentes de UI (ItemImage, ItemName, etc)
 
-### GameManager:
-- `actionCursor` - GameObject do cursor de ação
-- `interactionDistance` - Distância de interação
-- `distanceToSpawnResource` - Distância para spawnar recursos
-- `timeToSpawnResource` - Tempo entre spawns de recursos
+Se algum desses não estiver configurado, o jogo pode dar erro ou não funcionar direito.
 
-### Inventory:
-- `inventoryPanel` - Painel do inventário
-- `SlotGrid` - Grid onde os slots são criados
-- `slotPrefab` - Prefab do slot de inventário
-- `ItemInfoWindow` - Janela de informações do item
-- `ItemImage`, `ItemName`, `ItemType`, `ItemUseText` - Componentes UI
+## Dicas
 
-## 📝 Notas Importantes
+- Sempre commita os arquivos `.meta` junto com os assets
+- Não commita nada da pasta `Library/` ou `Temp/` - o Unity gera isso sozinho
+- Se der problema, tenta deletar `Library/` e `Temp/` e abrir de novo (o Unity recria tudo)
 
-- **NÃO commite** arquivos da pasta `Library/`, `Temp/`, `Logs/`, `UserSettings/`
-- **SEMPRE commite** arquivos `.meta` junto com os assets
-- O Unity gera automaticamente os arquivos `.meta` - não os edite manualmente
-- Se houver conflitos de merge nos arquivos `.meta`, geralmente é seguro aceitar ambas as versões
+## Bugs conhecidos
 
-## 🐛 Troubleshooting
+- Às vezes o loot não aparece quando destroi um recurso (verifica se o prefab do loot está configurado no ScriptableObject do item)
+- Se o inventory não encontrar o painel automaticamente, precisa atribuir manualmente no Inspector
 
-Se o projeto não abrir corretamente:
-1. Delete as pastas `Library/` e `Temp/` (serão recriadas automaticamente)
-2. Abra o projeto novamente no Unity
-3. Aguarde a reimportação completa
+## Contribuindo
 
-Se houver erros de compilação:
-1. Vá em `Assets > Reimport All`
-2. Verifique o Console do Unity para mensagens de erro
-3. Certifique-se de que todos os campos necessários estão atribuídos no Inspector
-
-## 👥 Contribuindo
-
-1. Crie uma branch para sua feature: `git checkout -b feature/nome-da-feature`
-2. Faça suas alterações
-3. Commit suas mudanças: `git commit -m "Descrição das mudanças"`
-4. Push para a branch: `git push origin feature/nome-da-feature`
-5. Abra um Pull Request
-
-## 📄 Licença
-
-[Adicione informações de licença aqui se necessário]
-
+Se for ajudar, cria uma branch nova pra sua feature e manda um PR quando terminar.
