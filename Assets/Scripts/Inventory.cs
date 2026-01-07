@@ -65,7 +65,12 @@ public class Inventory : MonoBehaviour
 
         if (isActive == true)
         {
+            CoreGame._instance.gameManager.ChangeGameState(GameState.Inventory);
             UpdateInventory();
+        }
+        else
+        {
+            CoreGame._instance.gameManager.ChangeGameState(GameState.Gameplay);
         }
     }
 
@@ -118,7 +123,7 @@ public class Inventory : MonoBehaviour
 
         if (ItemUseText != null)
         {
-            ItemUseText.text = item.itemUseText ?? "";
+            ItemUseText.text = item.itemDescription ?? "";
         }
 
         if (ItemType != null)

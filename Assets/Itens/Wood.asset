@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4675d4c1de7468e43863e2afddec09c5, type: 3}
-  m_Name: Fruit
+  m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::item
-  itemType: 4
-  itemUse: 1
+  itemType: 0
+  itemUse: 0
   itemAmount: 3
-  itemName: Fruta
-  itemSprite: {fileID: -6497341097991101460, guid: 743fec99883bc9349ba0c100fe49b7d0, type: 3}
-  itemDescription: Uma pequena fruta de sabor adocicado
+  itemName: Madeira
+  itemSprite: {fileID: 5694653546300670246, guid: 743fec99883bc9349ba0c100fe49b7d0, type: 3}
+  itemDescription: Lasca de pedra
   energyRestore: 0
-  lootPreFab: {fileID: 8746380465865221137, guid: ceb3c5f41eeb62045935660b81212b53, type: 3}
+  lootPreFab: {fileID: 8746380465865221137, guid: 7980ff4d7bb7f5042b8dab39e4eafebe, type: 3}
   lootAmount: 2
-  isRecoverEnergy: 1
-  EnergyAmount: 3
+  isRecoverEnergy: 0
+  EnergyAmount: 0
   isRecoverMana: 0
   isRecoverHP: 0
   HPAmount: 0

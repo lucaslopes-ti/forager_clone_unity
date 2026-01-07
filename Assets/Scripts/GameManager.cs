@@ -1,7 +1,21 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.Linq;
+
+[Serializable]
+public struct ResourceLoot
+{
+    public GameObject resource;
+    public int amount;
+}
+
+
 
 public class GameManager : MonoBehaviour
 {
+    public GameState gameState;
     public float interactionDistance;
     public GameObject actionCursor;
     [SerializeField]
@@ -13,9 +27,20 @@ public class GameManager : MonoBehaviour
     public float PlayerEnergyMax = 100f;
     public float PlayerEnergy = 100f;
 
+    public int playerLevel;
+
+    public float distanceToSpawnResource;
+    public float timeToSpawnResource;
+
     
     public void ActiveCursor(GameObject obj)
     {
+
+        if (gameState == GameState.Inventory)
+        {
+            return;
+        }
+
         if (actionCursor == null)
         {
             Debug.LogError("actionCursor não foi atribuído no Inspector do GameManager!");
@@ -38,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     public void DisableCursor()
     {
+        
+
         if (actionCursor == null)
         {
             return;
@@ -109,18 +136,56 @@ public class GameManager : MonoBehaviour
         }
         
         Debug.Log($"Gerando loot: {item.lootAmount} itens do tipo {item.itemName}");
+        Debug.Log($"Prefab do loot: {(item.lootPreFab != null ? item.lootPreFab.name : "NULL")}");
+        
+        if (item.lootPreFab == null)
+        {
+            Debug.LogError($"lootPreFab não está atribuído no Item {item.itemName}!");
+            return;
+        }
         
         DisableCursor();
         int dir = -1;
         for (int i = 0; i < item.lootAmount; i++)
         {
             // Adiciona um pequeno offset aleatório para evitar sobreposição
-            Vector3 spawnPosition = position + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(0f, 0.1f), 0f);
+            Vector3 spawnPosition = position + new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(0f, 0.1f), 0f);
             GameObject loot = Instantiate(item.lootPreFab, spawnPosition, transform.rotation);
-            loot.SendMessage("SetItem", item, SendMessageOptions.DontRequireReceiver);
-            loot.SendMessage("Active", dir, SendMessageOptions.DontRequireReceiver);
+            
+            // Verifica se o objeto instanciado tem o componente Loot
+            Component lootComponent = loot.GetComponent(typeof(MonoBehaviour));
+            if (lootComponent != null && lootComponent.GetType().Name == "Loot")
+            {
+                loot.SendMessage("SetItem", item, SendMessageOptions.DontRequireReceiver);
+                loot.SendMessage("Active", dir, SendMessageOptions.DontRequireReceiver);
+            }
+            else
+            {
+                Debug.LogWarning($"O prefab {item.lootPreFab.name} não tem o componente Loot! Verifique se está usando o prefab correto do loot.");
+            }
             dir *= -1;
         }
+    }
+
+    public void ChangeGameState(GameState newState)
+    {
+        gameState = newState;
+        switch (gameState)
+        {
+            case GameState.Inventory:
+                actionCursor.SetActive(false);
+                interacionObject = null;
+                break;
+            case GameState.Gameplay:
+                break;
+        }
+    }
+
+    public bool PlayerDistance(Vector3 position)
+    {
+        float distance = Vector3.Distance(CoreGame._instance.playerController.transform.position, position);
+        bool isReady = distance >= distanceToSpawnResource;
+        return isReady;
     }
 
 }

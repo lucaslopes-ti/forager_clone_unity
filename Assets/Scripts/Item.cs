@@ -9,10 +9,15 @@ public class Item : ScriptableObject
     public string itemName;
     public Sprite itemSprite;
     [TextArea(1, 4)]
-    public string itemDescription;
-    public string itemUseText;  // texto de uso do item
+    public string itemDescription; 
     public float energyRestore; // quantidade de energia que o item restaura (apenas para consumíveis)
     public GameObject lootPreFab;
     public int lootAmount;
+    public bool isRecoverEnergy;
+    public int EnergyAmount;
+    public bool isRecoverMana;
+
+    public bool isRecoverHP;
+    public int HPAmount;
 
 }

@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private bool isAction;
     private float actionTimer;
     private float actionDuration = 0.5f; // Duração estimada da animação de ataque
+
+    public float positionY;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,6 +32,24 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (CoreGame._instance != null && CoreGame._instance.inventory != null)
+            {
+                // Chama ShowInventory usando reflection
+                var showInventoryMethod = CoreGame._instance.inventory.GetType().GetMethod("ShowInventory");
+                if (showInventoryMethod != null)
+                {
+                    showInventoryMethod.Invoke(CoreGame._instance.inventory, null);
+                }
+            }
+        }
+
+        if (CoreGame._instance.gameManager.gameState == GameState.Inventory)
+        {
+            return;
+        }
+
         // Converte a posição do mouse do espaço da tela para o espaço do mundo
         // Para câmeras 2D, usamos a distância da câmera até o plano do jogo
         float distanceFromCamera = Camera.main.transform.position.z - transform.position.z;
@@ -85,19 +105,7 @@ public class PlayerController : MonoBehaviour
             isActionButton = false;
         }
 
-        if (Input.GetButtonDown("Cancel"))
-        {
-            if (CoreGame._instance != null && CoreGame._instance.inventory != null)
-            {
-                // Chama ShowInventory usando reflection
-                var showInventoryMethod = CoreGame._instance.inventory.GetType().GetMethod("ShowInventory");
-                if (showInventoryMethod != null)
-                {
-                    showInventoryMethod.Invoke(CoreGame._instance.inventory, null);
-                }
-            }
-        }
-
+        
 
         movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         
@@ -118,6 +126,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        positionY = transform.position.y;
+        
+    }
     private void Flip()
     {
         // Permite virar mesmo durante ações para melhor responsividade

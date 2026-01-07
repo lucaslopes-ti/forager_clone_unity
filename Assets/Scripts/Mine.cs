@@ -3,12 +3,22 @@ using UnityEngine;
 
 public class Mine : MonoBehaviour
 {
+    public IslandSlotGrid slot;
     public Item item;
     public int hitAmount;
 
     private void Start()
     {
         hitAmount = item.itemAmount;
+    }
+
+    public void SetSlot(IslandSlotGrid s)
+    {
+        slot = s;
+        transform.position = slot.transform.position;
+        GetComponent<SpriteRenderer>().sortingOrder = s.line;
+        
+
     }
     private void OnMouseOver()
     {
@@ -32,6 +42,7 @@ public class Mine : MonoBehaviour
        if (hitAmount <= 0)
         {
             CoreGame._instance.gameManager.Loot(item, transform.position);
+            slot.Busy(false);
             Destroy(this.gameObject);
         }
     }

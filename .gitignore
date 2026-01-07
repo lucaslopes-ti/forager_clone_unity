@@ -70,3 +70,11 @@ Thumbs.db
 # Ignore conf file if exists
 ignore.conf
 
+# Unity recovery files
+Assets/_Recovery/
+Assets/_Recovery.meta
+
+# Plastic SCM
+.plastic/
+.plastic/**
+
