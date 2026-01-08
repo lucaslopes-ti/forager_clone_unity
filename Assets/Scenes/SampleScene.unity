@@ -1754,11 +1754,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IslandPrefabDataBase
   resourceLV1:
   - resource: {fileID: 9176945841150221797, guid: fdabfeb546d5c13488a12a2ed527997d, type: 3}
-    amount: 5
+    amount: 1
+  resourceLV2:
   - resource: {fileID: 1639756880969331318, guid: 2a4d0e4d1843e274f94441cf984cf55d, type: 3}
-    amount: 2
+    amount: 1
+  resourceLV3:
   - resource: {fileID: 3548231534803275632, guid: d7c086744d5242b4f8d5ae5d2ca39e04, type: 3}
     amount: 1
+  resourceLV4:
+  - resource: {fileID: 2609623447076790621, guid: fc1ad2584f2ed134295c96829f56fea0, type: 3}
+    amount: 1
+  resourceLV5:
+  - resource: {fileID: 2352407498693787127, guid: e620a3df33af7ec479d0b4f2db063615, type: 3}
+    amount: 1
+  LevelToUpgrade: 010000000300000005000000070000000a000000
   resourceIsland: []
 --- !u!114 &465752081
 MonoBehaviour:
@@ -9170,6 +9179,7 @@ MonoBehaviour:
   TimeToDelete: 3
   PlayerEnergyMax: 100
   PlayerEnergy: 100
+  playerLevel: 11
   distanceToSpawnResource: 2
   timeToSpawnResource: 6
 --- !u!114 &1280825298

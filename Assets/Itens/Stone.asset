@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: Assembly-CSharp::item
   itemType: 3
+  itemUse: 0
   itemAmount: 3
   itemName: Pedra
   itemSprite: {fileID: 4796264166980554153, guid: 743fec99883bc9349ba0c100fe49b7d0, type: 3}
   itemDescription: Lasca de pedra
-  lootPreFab: {fileID: 8746380465865221137, guid: b0f308eb82b053a47bcce7e12979792b, type: 3}
+  energyRestore: 0
+  lootPreFab: {fileID: 8746380465865221137, guid: 680e953c233826e44b3109f72449bfe6, type: 3}
   lootAmount: 2
+  isRecoverEnergy: 0
+  EnergyAmount: 0
+  isRecoverMana: 0
+  isRecoverHP: 0
+  HPAmount: 0

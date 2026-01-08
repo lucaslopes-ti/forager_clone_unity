@@ -13,7 +13,7 @@ public enum ItemUse
 
 public enum GameState
 {
-    Gameplay, Inventory
+    Gameplay, Inventory, Craft
 }
 
 public class CoreGame : MonoBehaviour

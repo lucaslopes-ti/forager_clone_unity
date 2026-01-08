@@ -19,7 +19,7 @@ MonoBehaviour:
   itemSprite: {fileID: -6247109869272520733, guid: d795d1a7ff453f449834ad44dda6b30c, type: 3}
   itemDescription: Ferro demais
   energyRestore: 0
-  lootPreFab: {fileID: 2352407498693787127, guid: e620a3df33af7ec479d0b4f2db063615, type: 3}
+  lootPreFab: {fileID: 8746380465865221137, guid: 680e953c233826e44b3109f72449bfe6, type: 3}
   lootAmount: 2
   isRecoverEnergy: 1
   EnergyAmount: 3

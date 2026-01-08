@@ -66,4 +66,26 @@ public class IslandManager : MonoBehaviour
         }
     }
 
+    public void CraftMode()
+    {
+        StopCoroutine(SpawnResource());
+        foreach (IslandSlotGrid s in slot)
+        {
+            if (s.isBusy == false)
+            {
+                s.ShowBorder(true);
+            }
+        }
+    }
+
+    public void GameplayMode()
+    {
+        foreach (IslandSlotGrid s in slot)
+        {
+            s.ShowBorder(false);
+        }
+
+        StartCoroutine(SpawnResource());
+    }
+
 }
