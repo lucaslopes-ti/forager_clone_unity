@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 
 [Serializable]
 public struct ResourceLoot
@@ -33,6 +34,8 @@ public class GameManager : MonoBehaviour
     public float timeToSpawnResource;
 
     public GameObject objectToCraft;
+
+    public List<IslandManager> islands = new List<IslandManager>();
 
 
     
@@ -183,6 +186,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Craft:
+
                 break;
         }
     }
@@ -194,6 +198,30 @@ public class GameManager : MonoBehaviour
         return isReady;
     }
 
+    public void StartCraftMode(GameObject obj)
+    {
+        objectToCraft = obj;
+        ChangeGameState(GameState.Craft);
+        foreach (IslandManager i in islands)
+        {
+            i.CraftMode();
+        }
+
+        // Usa reflection para acessar inventoryPanel já que inventory é MonoBehaviour
+        if (CoreGame._instance != null && CoreGame._instance.inventory != null)
+        {
+            var inventoryPanelField = CoreGame._instance.inventory.GetType().GetField("inventoryPanel");
+            if (inventoryPanelField != null)
+            {
+                GameObject inventoryPanel = inventoryPanelField.GetValue(CoreGame._instance.inventory) as GameObject;
+                if (inventoryPanel != null)
+                {
+                    inventoryPanel.SetActive(false);
+                }
+            }
+        }
+    }
+
     public void SetCraftObject(IslandSlotGrid slot)
     {
         GameObject obj = Instantiate(objectToCraft);
@@ -201,7 +229,7 @@ public class GameManager : MonoBehaviour
         slot.isBusy = true;
         slot.ShowBorder(true);
         
-        ChangeGameState(GameState.Gameplay);    
+        
     }
 
 }

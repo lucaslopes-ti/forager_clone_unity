@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
     public Dictionary<Item, int> inventory = new Dictionary<Item, int>();
 
     public GameObject inventoryPanel;
+    public GameObject[] SubPanel;
+    public int idSubPanel;
     public RectTransform SlotGrid;
     public GameObject slotPrefab;
 
@@ -60,6 +62,7 @@ public class Inventory : MonoBehaviour
 
     public void ShowInventory()
     {
+        InventoryTabs(0);
         bool isActive = !inventoryPanel.activeSelf;
         inventoryPanel.SetActive(isActive);
 
@@ -140,7 +143,17 @@ public class Inventory : MonoBehaviour
             Debug.LogError("ItemInfoWindow não está atribuído no Inspector do Inventory!");
         }
     }
-    
+
+    public void InventoryTabs(int idTab)
+    {
+        foreach (GameObject t in SubPanel)
+        {
+            t.SetActive(false);
+        }
+        SubPanel[idTab].SetActive(true);
+
+    }
+
 
    
 }

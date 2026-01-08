@@ -25,6 +25,8 @@ public class IslandManager : MonoBehaviour
         }
 
         StartCoroutine(SpawnResource());
+
+        CoreGame._instance.gameManager.islands.Add(this);
     }
 
     void NewResource()
