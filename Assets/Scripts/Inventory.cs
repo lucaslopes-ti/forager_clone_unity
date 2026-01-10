@@ -7,8 +7,13 @@ public class Inventory : MonoBehaviour
     public Dictionary<Item, int> inventory = new Dictionary<Item, int>();
 
     public GameObject inventoryPanel;
+    
+    [Header("Inventory Tabs")]
     public GameObject[] SubPanel;
+    public GameObject[] TabButtons; // Botões de abas (Itens, Build, etc.)
     public int idSubPanel;
+    
+    [Header("Inventory Slots")]
     public RectTransform SlotGrid;
     public GameObject slotPrefab;
 
@@ -20,8 +25,16 @@ public class Inventory : MonoBehaviour
     public Text ItemType;
     public Text ItemUseText;
 
+    public Button[] CraftButtons;    
+
     private List<GameObject> inventorySlots = new List<GameObject>();
     //public Dictionary<Item, GameObject> inventorySlots = new Dictionary<Item, GameObject>();
+
+    public void Start()
+    {
+        ShowInventory();
+    }
+
 
 
     public void getItem(Item item, int amount)
@@ -62,12 +75,24 @@ public class Inventory : MonoBehaviour
 
     public void ShowInventory()
     {
-        InventoryTabs(0);
         bool isActive = !inventoryPanel.activeSelf;
         inventoryPanel.SetActive(isActive);
 
         if (isActive == true)
         {
+            // Ativa os botões de abas quando o inventário é aberto
+            if (TabButtons != null && TabButtons.Length > 0)
+            {
+                foreach (GameObject button in TabButtons)
+                {
+                    if (button != null)
+                    {
+                        button.SetActive(true);
+                    }
+                }
+            }
+            
+            InventoryTabs(0);
             CoreGame._instance.gameManager.ChangeGameState(GameState.Inventory);
             UpdateInventory();
         }
@@ -146,12 +171,43 @@ public class Inventory : MonoBehaviour
 
     public void InventoryTabs(int idTab)
     {
+        // Verifica se o índice é válido
+        if (SubPanel == null || idTab < 0 || idTab >= SubPanel.Length)
+        {
+            Debug.LogWarning($"Índice de aba inválido: {idTab}. Total de abas: {(SubPanel != null ? SubPanel.Length : 0)}");
+            return;
+        }
+
+        // Desativa todos os sub painéis
         foreach (GameObject t in SubPanel)
         {
-            t.SetActive(false);
+            if (t != null)
+            {
+                t.SetActive(false);
+            }
         }
-        SubPanel[idTab].SetActive(true);
+        
+        // Ativa o sub painel selecionado
+        if (SubPanel[idTab] != null)
+        {
+            SubPanel[idTab].SetActive(true);
+            idSubPanel = idTab; // Atualiza o ID da aba atual
+        }
+        else
+        {
+            Debug.LogError($"SubPanel[{idTab}] é null!");
+        }
+    }
 
+    private void CheckRecipes()
+    {
+        foreach (Button button in CraftButtons)
+        {
+            if (button != null)
+            {
+                button.GetComponent<CheckRecipeIsReady>().CheckRecipe();
+            }
+        }
     }
 
 

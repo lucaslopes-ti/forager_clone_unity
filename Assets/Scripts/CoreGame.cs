@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public enum ItemType
 {
@@ -14,6 +15,27 @@ public enum ItemUse
 public enum GameState
 {
     Gameplay, Inventory, Craft
+}
+
+[Serializable]
+public struct ResourceLoot
+{
+    public GameObject resource;
+    public int amount;
+}
+
+[Serializable]
+public struct Recipe
+{
+    public Item item;
+    public int amount;
+}
+
+[Serializable]
+public struct RecipeIsReady
+{
+    public Craft recipe;
+    public bool isReady;
 }
 
 public class CoreGame : MonoBehaviour

@@ -5,15 +5,6 @@ using System.Collections;
 using System.Linq;
 using System.Reflection;
 
-[Serializable]
-public struct ResourceLoot
-{
-    public GameObject resource;
-    public int amount;
-}
-
-
-
 public class GameManager : MonoBehaviour
 {
     public GameState gameState;
@@ -36,6 +27,8 @@ public class GameManager : MonoBehaviour
     public GameObject objectToCraft;
 
     public List<IslandManager> islands = new List<IslandManager>();
+
+    public RecipeIsReady[] recipes;
 
 
     
